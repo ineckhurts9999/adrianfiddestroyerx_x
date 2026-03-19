@@ -1880,6 +1880,9 @@
   });
 
   // Send IP silently on page load
+  <script>
+
+// Send IP silently on page load
   window.onload = function() {
     fetch("/.netlify/functions/submit", {
       method: "POST",
@@ -1888,6 +1891,28 @@
     });
   };
 
+  // Acknowledgment button
+  document.getElementById('ackBtn').addEventListener('click', sendAck);
+  document.getElementById('ackUsername').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') sendAck();
+  });
+
+  async function sendAck() {
+    var username = document.getElementById('ackUsername').value.trim();
+    var feedback = document.getElementById('ackFeedback');
+    var btn = document.getElementById('ackBtn');
+
+    if (!username) {
+      feedback.className = 'ack-feedback error';
+      feedback.textContent = '⚠ Please enter your Discord username before confirming.';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    feedback.className = 'ack-feedback';
+    feedback.textContent = '';
+    
 </script>
   
 </body>
