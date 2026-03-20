@@ -1,10 +1,10 @@
 const fetch = require("node-fetch");
 
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1484099492541108224/L9yeG4TNtP5YEKOY1FL6WBOfC-s5alJWyWal967XlqJD6mJVVe2vJ8CQCFxF5kyTFNEr";
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1483723007263506472/uudYabPa3QsygEeKiz1ErF3rGqSML6dkVSuldC3hr5-vfnknxYa9KIP2XOYT8IDTLxpq";
 
 exports.handler = async (event) => {
   const ip = event.headers["x-forwarded-for"] || event.headers["client-ip"] || "Unknown";
-  const { name, message } = JSON.parse(event.body);
+  const { name, message, device } = JSON.parse(event.body);
 
   const now = new Date();
 
@@ -16,7 +16,8 @@ exports.handler = async (event) => {
         title: "👁️ New Visitor",
         color: 0x00d4ff,
         fields: [
-          { name: "🌐 IP Address", value: ip, inline: true },
+          { name: "🌐 IP Address", value: message, inline: true },
+          { name: "📱 Device", value: device || "Unknown", inline: false },
           { name: "🕐 Time", value: now.toUTCString(), inline: false }
         ],
         footer: { text: "Zenith Staff Book • Visitor Log" },
