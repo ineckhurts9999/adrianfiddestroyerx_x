@@ -3,519 +3,731 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zenith Staff Book</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<title>CASH CLICKER</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cyan: #00d4ff;
-    --cyan-dim: rgba(0,212,255,0.15);
-    --cyan-border: rgba(0,212,255,0.3);
-    --cyan-glow: rgba(0,212,255,0.5);
-    --red: #ff2828;
-    --red-dim: rgba(255,40,40,0.12);
-    --red-border: rgba(255,40,40,0.4);
-    --bg: #020204;
-    --surface: #050508;
-    --surface-2: #08080d;
-    --border: #111118;
-    --border-bright: #1e1e2e;
-    --text: #9090b0;
-    --text-bright: #c8c8e8;
-    --text-dim: #404055;
+    --green: #00ff88;
+    --dark-green: #00c96b;
+    --gold: #ffd700;
+    --red: #ff4444;
+    --bg: #0a0a0a;
+    --panel: #111111;
+    --border: #1e1e1e;
+    --text: #e0e0e0;
+    --muted: #555;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html, body {
-    width: 100%;
-    min-height: 100vh;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Barlow', sans-serif;
-    font-weight: 400;
+    font-family: 'Space Mono', monospace;
     min-height: 100vh;
-    padding: 0;
-    margin: 0;
-    position: relative;
     overflow-x: hidden;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    bottom: -100px; left: 50%;
-    transform: translateX(-50%);
-    width: 900px; height: 500px;
-    background: radial-gradient(ellipse, rgba(0,150,220,0.07) 0%, transparent 65%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
     background-image:
-      repeating-linear-gradient(-70deg, transparent, transparent 200px, rgba(0,212,255,0.018) 200px, rgba(0,212,255,0.018) 201px),
-      repeating-linear-gradient(20deg, transparent, transparent 300px, rgba(0,212,255,0.012) 300px, rgba(0,212,255,0.012) 301px);
-    pointer-events: none;
-    z-index: 0;
+      repeating-linear-gradient(0deg, transparent, transparent 39px, #111 39px, #111 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, #111 39px, #111 40px);
   }
 
-  .book {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    position: relative;
-    z-index: 1;
-    animation: slam 0.5s cubic-bezier(.16,1,.3,1) both;
-  }
-
-  @keyframes slam {
-    from { opacity: 0; transform: translateY(-12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .header {
-    text-align: center;
-    padding: 52px 6vw 44px;
-    background: var(--surface);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .header::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent 0%, transparent 8%,
-      var(--cyan) 20%, rgba(180,240,255,1) 50%,
-      var(--cyan) 80%, transparent 92%, transparent 100%
-    );
-    box-shadow: 0 0 20px var(--cyan-glow), 0 0 60px rgba(0,212,255,0.2);
-  }
-
-  .header::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 600px; height: 160px;
-    background: radial-gradient(ellipse at 50% 0%, rgba(0,180,255,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .header-tag {
-    position: relative;
-    z-index: 1;
-    display: inline-block;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--cyan);
-    opacity: 0.6;
-    margin-bottom: 16px;
-  }
-
-  .header h1 {
-    position: relative;
-    z-index: 1;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 80px;
-    letter-spacing: 8px;
-    line-height: 0.9;
-    color: #ffffff;
-    text-shadow: 0 0 40px rgba(0,212,255,0.3), 0 0 80px rgba(0,212,255,0.1), 0 2px 0 rgba(0,0,0,0.8);
-  }
-
-  .header h1 .crack {
-    color: var(--cyan);
-    text-shadow: 0 0 20px var(--cyan-glow), 0 0 50px rgba(0,212,255,0.4);
-  }
-
-  .header-sub {
-    position: relative;
-    z-index: 1;
-    margin-top: 14px;
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px;
-    letter-spacing: 6px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-
-  .jagged-sep {
-    position: relative;
-    z-index: 1;
-    margin: 28px auto 0;
-    width: 100%;
+  header {
+    background: #0d0d0d;
+    border-bottom: 2px solid var(--green);
+    padding: 12px 24px;
     display: flex;
     align-items: center;
-    gap: 0;
-  }
-  .jagged-sep::before, .jagged-sep::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border-bright));
-  }
-  .jagged-sep::after { background: linear-gradient(90deg, var(--border-bright), transparent); }
-  .jagged-mid { width: 60px; height: 8px; position: relative; flex-shrink: 0; }
-  .jagged-mid svg { display: block; width: 100%; height: 100%; }
-
-  .body {
-    background: var(--surface);
-    padding: 0 6vw 44px;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 0 30px rgba(0,255,136,0.15);
   }
 
-  .section { padding: 36px 0 0; }
-
-  .section-title {
+  header h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px;
+    font-size: 2rem;
+    color: var(--green);
     letter-spacing: 4px;
-    color: var(--text-dim);
+    text-shadow: 0 0 20px rgba(0,255,136,0.5);
+  }
+
+  .header-stats {
     display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 14px;
-  }
-  .section-title .bar { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border-bright), transparent); }
-  .section-title .tick { width: 3px; height: 14px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan-glow); flex-shrink: 0; }
-
-  .rules { display: flex; flex-direction: column; gap: 6px; }
-
-  .rule {
-    display: flex;
-    gap: 0;
-    align-items: stretch;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-    transition: border-color 0.2s, background 0.2s;
+    gap: 32px;
+    font-size: 0.7rem;
+    color: var(--muted);
   }
 
-  .rule-strip {
-    width: 3px;
-    flex-shrink: 0;
-    background: rgba(0,212,255,0.2);
-    transition: background 0.2s, box-shadow 0.2s;
-  }
-  .rule:hover .rule-strip { background: var(--cyan); box-shadow: 0 0 12px var(--cyan-glow); }
-  .rule.rule-warn .rule-strip { background: rgba(255,40,40,0.3); }
-  .rule.rule-warn:hover .rule-strip { background: var(--red); box-shadow: 0 0 12px rgba(255,40,40,0.5); }
-
-  .rule-inner { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; flex: 1; }
-  .rule:hover { background: #0a0a10; border-color: #222230; }
-
-  .rule-num {
-    flex-shrink: 0;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    color: var(--border-bright);
-    line-height: 1;
-    min-width: 24px;
-    transition: color 0.2s;
-  }
-  .rule:hover .rule-num { color: var(--cyan); }
-  .rule.rule-warn:hover .rule-num { color: var(--red); }
-
-  .rule-body { flex: 1; font-size: 13.5px; line-height: 1.75; color: var(--text); font-weight: 400; }
-
-  .note {
-    display: inline-block;
-    margin-top: 5px;
-    font-size: 11.5px;
-    font-weight: 600;
-    font-family: 'Barlow Condensed', sans-serif;
-    letter-spacing: 0.5px;
-    color: var(--cyan);
-    background: var(--cyan-dim);
-    border-left: 2px solid var(--cyan);
-    padding: 3px 10px;
-  }
-  .note-red { color: var(--red); background: var(--red-dim); border-left-color: var(--red); }
-
-  .commands-grid { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-
-  .cmd {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 15px;
+  .header-stat span {
+    display: block;
+    color: var(--gold);
+    font-size: 1rem;
     font-weight: 700;
-    letter-spacing: 2px;
-    padding: 8px 18px;
-    background: var(--surface-2);
-    border: 1px solid var(--border-bright);
-    border-top: 2px solid var(--cyan);
-    color: #fff;
-    text-transform: uppercase;
-    transition: background 0.2s, box-shadow 0.2s;
-    cursor: default;
   }
-  .cmd:hover { background: var(--cyan-dim); box-shadow: 0 0 20px rgba(0,212,255,0.1); }
-  .cmd-prefix { color: var(--cyan); margin-right: 1px; }
-  .cmd-note { margin-top: 10px; font-size: 12px; color: var(--text-dim); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase; }
-  .cmd-note span { color: var(--cyan); }
 
-  .image-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 12px; }
-  .img-slot {
-    aspect-ratio: 1;
-    border: 1px solid var(--border-bright);
-    background: var(--surface-2);
-    display: flex; align-items: center; justify-content: center;
-    overflow: hidden;
-    position: relative;
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 340px 320px;
+    gap: 0;
+    min-height: calc(100vh - 61px);
   }
-  .img-slot::after { content: ''; position: absolute; inset: 0; border-top: 1px solid rgba(0,212,255,0.08); pointer-events: none; }
-  .img-slot img { width: 100%; height: 100%; object-fit: contain; }
-  .img-slot .placeholder { color: var(--text-dim); font-size: 11px; text-align: center; padding: 8px; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; }
 
-  .warning-banner {
-    margin-top: 32px;
+  /* CENTER - CLICKER */
+  .clicker-zone {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    background: var(--red-dim);
-    border: 1px solid var(--red-border);
+    justify-content: center;
+    padding: 40px 20px;
+    position: relative;
+    border-right: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+  }
+
+  .money-display {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .money-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--green);
+    text-shadow: 0 0 30px rgba(0,255,136,0.4);
+    line-height: 1;
+  }
+
+  .money-label {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 3px;
+    margin-top: 4px;
+  }
+
+  .per-sec {
+    font-size: 0.75rem;
+    color: var(--dark-green);
+    margin-top: 8px;
+  }
+
+  .click-btn {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #1aff9a, #00aa55);
+    border: 4px solid var(--green);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.08s, box-shadow 0.08s;
+    box-shadow: 0 0 40px rgba(0,255,136,0.3), 0 8px 32px rgba(0,0,0,0.6);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .click-btn:hover { box-shadow: 0 0 60px rgba(0,255,136,0.5), 0 8px 40px rgba(0,0,0,0.6); }
+  .click-btn:active { transform: scale(0.94); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+
+  .click-btn .btn-icon { font-size: 3rem; }
+  .click-btn .btn-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #003322;
+    margin-top: 4px;
+  }
+
+  .click-value {
+    font-size: 0.7rem;
+    color: #003322;
+    opacity: 0.7;
+  }
+
+  .multiplier-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--gold);
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+
+  .combo-bar {
+    margin-top: 28px;
+    width: 240px;
+  }
+
+  .combo-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+
+  .combo-label .combo-val { color: var(--gold); }
+
+  .bar-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+    border-radius: 3px;
+    transition: width 0.15s;
+    width: 0%;
+  }
+
+  /* FLOAT NUMBERS */
+  .float-num {
+    position: fixed;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--green);
+    text-shadow: 0 0 10px rgba(0,255,136,0.8);
+    pointer-events: none;
+    z-index: 999;
+    animation: floatUp 0.9s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.3); }
+  }
+
+  /* LEFT - UPGRADES */
+  .upgrades-panel {
+    padding: 24px 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 61px);
+  }
+
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  /* RIGHT - STORE */
+  .store-panel {
+    padding: 24px 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 61px);
+    background: #0d0d0d;
+  }
+
+  .store-item, .upgrade-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
     position: relative;
     overflow: hidden;
   }
-  .warning-banner::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--red), transparent); }
-  .warning-strip { width: 4px; align-self: stretch; background: var(--red); box-shadow: 0 0 15px rgba(255,40,40,0.6); flex-shrink: 0; }
-  .warning-content { padding: 14px 18px; display: flex; align-items: center; gap: 12px; }
-  .warning-icon { font-size: 18px; flex-shrink: 0; }
-  .warning-text { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 2px; color: var(--red); text-transform: uppercase; }
 
-  .footer {
-    background: var(--surface);
-    padding: 18px 6vw;
+  .store-item:hover, .upgrade-item:hover {
+    border-color: var(--green);
+    background: #161616;
+    transform: translateX(-2px);
+  }
+
+  .store-item.cannot-afford, .upgrade-item.cannot-afford {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .store-item.cannot-afford:hover, .upgrade-item.cannot-afford:hover {
+    border-color: var(--border);
+    background: var(--panel);
+  }
+
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .item-name {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+
+  .item-count {
+    background: var(--border);
+    color: var(--green);
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+
+  .item-desc {
+    font-size: 0.6rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .item-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
   }
-  .footer::after { content: ''; position: absolute; bottom: 0; left: 15%; right: 15%; height: 1px; background: linear-gradient(90deg, transparent, rgba(0,212,255,0.15), transparent); box-shadow: 0 0 8px rgba(0,212,255,0.1); }
-  .footer-text { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 4px; color: var(--text-dim); }
-  .footer-text .accent { color: var(--cyan); }
-  .footer-status { display: flex; align-items: center; gap: 8px; font-family: 'Barlow Condensed', sans-serif; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); }
-  .status-dot { width: 5px; height: 5px; background: var(--cyan); box-shadow: 0 0 6px var(--cyan-glow); animation: blink 2s ease-in-out infinite; }
-  @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
 
-  .ack-section {
-    margin-top: 36px;
-    background: var(--surface-2);
-    border: 1px solid var(--border-bright);
-    border-top: 2px solid var(--cyan);
-    padding: 24px 20px;
+  .item-cost {
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
   }
-  .ack-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 4px; color: var(--cyan); margin-bottom: 6px; }
-  .ack-desc { font-size: 12px; color: var(--text-dim); font-family: 'Barlow Condensed', sans-serif; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
-  .ack-input-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-  .ack-input {
-    flex: 1;
-    min-width: 180px;
-    background: var(--surface);
-    border: 1px solid var(--border-bright);
-    border-bottom: 2px solid var(--cyan);
-    color: #fff;
-    font-family: 'Barlow', sans-serif;
-    font-size: 14px;
-    padding: 10px 14px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+
+  .item-effect {
+    font-size: 0.6rem;
+    color: var(--green);
   }
-  .ack-input:focus { border-color: var(--cyan); box-shadow: 0 0 12px rgba(0,212,255,0.15); }
-  .ack-input::placeholder { color: var(--text-dim); }
-  .ack-btn {
-    background: var(--cyan-dim);
-    border: 1px solid var(--cyan);
-    color: var(--cyan);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 16px;
-    letter-spacing: 3px;
-    padding: 10px 28px;
+
+  .item-shimmer {
+    position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,255,136,0.05), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  /* PRESTIGE */
+  .prestige-btn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    background: transparent;
+    border: 2px solid var(--red);
+    color: var(--red);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
     cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s;
+    border-radius: 6px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .prestige-btn:hover:not(:disabled) {
+    background: var(--red);
+    color: #fff;
+  }
+
+  .prestige-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #111;
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 9999;
     white-space: nowrap;
   }
-  .ack-btn:hover { background: rgba(0,212,255,0.25); box-shadow: 0 0 20px rgba(0,212,255,0.2); }
-  .ack-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-  .ack-feedback { margin-top: 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: none; }
-  .ack-feedback.success { color: var(--cyan); display: block; }
-  .ack-feedback.error { color: var(--red); display: block; }
 
-  @media (max-width: 600px) {
-    .header { padding: 36px 22px 32px; }
-    .header h1 { font-size: 56px; }
-    .body { padding: 0 22px 32px; }
-    .footer { padding: 16px 22px; }
-    .image-grid { grid-template-columns: repeat(2, 1fr); }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
   }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .section-label {
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin: 16px 0 8px;
+  }
+
+  .owned-glow { border-color: rgba(0,255,136,0.3) !important; }
 </style>
 </head>
 <body>
 
-<!-- Fullscreen splash -->
-<div id="fso" style="position:fixed;inset:0;z-index:9999;background:#020204;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;cursor:pointer;user-select:none;-webkit-user-select:none;">
-  <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:6px;color:#fff">ZENITH</div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:13px;letter-spacing:4px;color:#00d4ff;text-transform:uppercase">Click anywhere to enter</div>
+<header>
+  <h1>💵 CASH CLICKER</h1>
+  <div class="header-stats">
+    <div class="header-stat">TOTAL EARNED<span id="totalEarned">$0</span></div>
+    <div class="header-stat">PER SECOND<span id="headerCps">$0/s</span></div>
+    <div class="header-stat">PRESTIGE<span id="prestigeCount">×0</span></div>
+  </div>
+</header>
+
+<div class="layout">
+  <!-- UPGRADES -->
+  <div class="upgrades-panel">
+    <div class="panel-title">⚡ UPGRADES</div>
+    <div id="upgradesList"></div>
+  </div>
+
+  <!-- CLICKER -->
+  <div class="clicker-zone">
+    <div class="money-display">
+      <div class="money-amount" id="moneyDisplay">$0.00</div>
+      <div class="money-label">CURRENT BALANCE</div>
+      <div class="per-sec" id="cpsDisplay">+$0.00 per second</div>
+    </div>
+
+    <div style="position:relative">
+      <button class="click-btn" id="clickBtn" onclick="handleClick(event)">
+        <div class="btn-icon">💰</div>
+        <div class="btn-label">CLICK TO EARN</div>
+        <div class="click-value" id="clickValueLabel">+$1.00 per click</div>
+      </button>
+      <div class="multiplier-badge" id="multiBadge">×1</div>
+    </div>
+
+    <div class="combo-bar">
+      <div class="combo-label">
+        <span>COMBO</span>
+        <span class="combo-val" id="comboLabel">0 clicks</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" id="comboBar"></div></div>
+    </div>
+
+    <button class="prestige-btn" id="prestigeBtn" onclick="prestige()" disabled>
+      🔁 PRESTIGE (need $1M total)
+    </button>
+  </div>
+
+  <!-- STORE -->
+  <div class="store-panel">
+    <div class="panel-title">🏪 STORE</div>
+    <div id="storeList"></div>
+  </div>
 </div>
 
-<div class="book">
-
-  <div class="header">
-    <div class="header-tag">Official Document</div>
-    <h1><span class="crack">ZENITH</span> STAFF BOOK</h1>
-    <div class="header-sub">Moderator Guidelines &amp; Protocols</div>
-    <div class="jagged-sep">
-      <div></div>
-      <div class="jagged-mid">
-        <svg viewBox="0 0 60 8" xmlns="http://www.w3.org/2000/svg">
-          <polyline points="0,4 10,0 20,8 30,0 40,8 50,0 60,4" fill="none" stroke="rgba(0,212,255,0.35)" stroke-width="1"/>
-        </svg>
-      </div>
-      <div></div>
-    </div>
-  </div>
-
-  <div class="body">
-
-    <div class="section">
-      <div class="section-title"><div class="tick"></div>General Conduct<div class="bar"></div></div>
-      <div class="rules">
-
-        <div class="rule">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">01</div>
-            <div class="rule-body">Don't power abuse. <span class="note">(Do not mute, ban, kick, or warn members without a valid reason.)</span></div>
-          </div>
-        </div>
-
-        <div class="rule rule-warn">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">02</div>
-            <div class="rule-body">Do not approve members who are sensitive or fail to provide enough information or context. <span class="note note-red">(Doing so may result in losing your moderator role.)</span></div>
-          </div>
-        </div>
-
-        <div class="rule">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">03</div>
-            <div class="rule-body">If a member says they cannot send proof because Discord doesn't allow it, instruct them to slightly blur the image or cover parts of it while keeping the important details visible.</div>
-          </div>
-        </div>
-
-        <div class="rule rule-warn">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">04</div>
-            <div class="rule-body">Members who troll or do not take the application process seriously must be banned. Please remove trolls to prevent issues for yourself and the server.</div>
-          </div>
-        </div>
-
-        <div class="rule">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">05</div>
-            <div class="rule-body">Any alternate accounts of a member, including kicked or banned users who keep rejoining, should be removed — except for approved staff accounts. <span class="note">(e.g., L, 413x, Skid)</span></div>
-          </div>
-        </div>
-
-        <div class="rule">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">06</div>
-            <div class="rule-body">If you decide to deny an application due to missing information, ask the member to reapply and ensure they provide all required details.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="tick"></div>Verification Policy<div class="bar"></div></div>
-      <div class="rules">
-        <div class="rule rule-warn">
-          <div class="rule-strip"></div>
-          <div class="rule-inner">
-            <div class="rule-num">07</div>
-            <div class="rule-body">
-              Anyone with a suspicious or default profile picture (like the ones below) will be automatically denied verification. This prevents trolls from entering.
-              <br><span class="note note-red">(MEMBERS UNDER 14 WILL ALSO BE DENIED ACCESS.)</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="image-grid">
-        <div class="img-slot"><img src="image1.png" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'placeholder\'>PFP 1</div>'"></div>
-        <div class="img-slot"><img src="image2.png" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'placeholder\'>PFP 2</div>'"></div>
-        <div class="img-slot"><img src="image3.png" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'placeholder\'>PFP 3</div>'"></div>
-        <div class="img-slot"><img src="image4.png" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'placeholder\'>PFP 4</div>'"></div>
-      </div>
-    </div>
-
-    <div class="section">
-      <div class="section-title"><div class="tick"></div>Moderator Commands<div class="bar"></div></div>
-      <div class="commands-grid">
-        <div class="cmd"><span class="cmd-prefix">,</span>kick</div>
-        <div class="cmd"><span class="cmd-prefix">,</span>ban</div>
-        <div class="cmd"><span class="cmd-prefix">,</span>mute</div>
-        <div class="cmd"><span class="cmd-prefix">,</span>warn</div>
-      </div>
-      <div class="cmd-note">Mods get access to the following commands with the prefix <span>,</span></div>
-    </div>
-
-    <div class="warning-banner">
-      <div class="warning-strip"></div>
-      <div class="warning-content">
-        <div class="warning-icon">⛔</div>
-        <div class="warning-text">Failure to follow these guidelines will result in your roles being removed.</div>
-      </div>
-    </div>
-
-    <div class="ack-section" id="ackSection">
-      <div class="ack-title">✅ Acknowledge Staff Book</div>
-      <div class="ack-desc">Enter your Discord username to confirm you have read and understood these guidelines.</div>
-      <div class="ack-input-row">
-        <input class="ack-input" id="ackUsername" type="text" placeholder="Your Discord username (e.g. user#0001)" maxlength="80" autocomplete="off" />
-        <button class="ack-btn" id="ackBtn">Confirm Read</button>
-      </div>
-      <div class="ack-feedback" id="ackFeedback"></div>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    <div class="footer-text">End of <span class="accent">Zenith</span> Staff Book</div>
-    <div class="footer-status">
-      <div class="status-dot"></div>
-      Active
-    </div>
-  </div>
-
-</div>
+<div class="toast" id="toast"></div>
 
 <script>
-  // Fullscreen splash
-  document.getElementById('fso').addEventListener('click', function() {
-    var el = document.documentElement;
-    (el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el.msRequestFullscreen).call(el);
-    this.remove();
-  });
+// ========== GAME STATE ==========
+let state = {
+  money: 0,
+  totalEarned: 0,
+  clickValue: 1,
+  multiplier: 1,
+  cps: 0,
+  combo: 0,
+  comboTimeout: null,
+  prestigeCount: 0,
+  prestigeMulti: 1,
+  ownedStore: {},
+  ownedUpgrades: {},
+};
 
-  // Send IP silently on page load
+// ========== STORE ITEMS ==========
+const storeItems = [
+  { id: 'intern', name: '🧑‍💼 Unpaid Intern', desc: 'Works for free. Generates a tiny trickle of cash.', baseCost: 15, baseCps: 0.1, scaling: 1.15 },
+  { id: 'lemonade', name: '🍋 Lemonade Stand', desc: 'Classic hustle. Squeezing profit one cup at a time.', baseCost: 100, baseCps: 0.5, scaling: 1.15 },
+  { id: 'website', name: '💻 Drop-Ship Website', desc: 'Selling things you don\'t own to people you don\'t know.', baseCost: 500, baseCps: 2, scaling: 1.15 },
+  { id: 'food', name: '🚚 Food Truck', desc: 'Mobile profits. Follows the lunch crowd.', baseCost: 2000, baseCps: 8, scaling: 1.15 },
+  { id: 'crypto', name: '🪙 Crypto Farm', desc: 'Printing digital coins. Vibes-based valuation.', baseCost: 8000, baseCps: 25, scaling: 1.15 },
+  { id: 'stocks', name: '📈 Stock Portfolio', desc: 'Number go up. Sometimes.', baseCost: 25000, baseCps: 70, scaling: 1.15 },
+  { id: 'startup', name: '🚀 Tech Startup', desc: 'Disrupting the disruption of disruption.', baseCost: 100000, baseCps: 200, scaling: 1.15 },
+  { id: 'bank', name: '🏦 Private Bank', desc: 'At this point, money makes money.', baseCost: 500000, baseCps: 700, scaling: 1.15 },
+];
+
+// ========== UPGRADES ==========
+const upgrades = [
+  { id: 'click2', name: '💪 Better Clicking', desc: 'Double your click value.', cost: 50, effect: () => { state.clickValue *= 2; }, req: () => state.totalEarned >= 30 },
+  { id: 'click3', name: '🤜 Power Fingers', desc: 'Click value ×3.', cost: 500, effect: () => { state.clickValue *= 3; }, req: () => state.totalEarned >= 200 },
+  { id: 'click4', name: '⚡ Speed Hands', desc: 'Click value ×5.', cost: 5000, effect: () => { state.clickValue *= 5; }, req: () => state.totalEarned >= 2000 },
+  { id: 'multi2', name: '✨ 2× Multiplier', desc: 'All income doubled permanently.', cost: 1000, effect: () => { state.multiplier *= 2; }, req: () => state.totalEarned >= 500 },
+  { id: 'multi3', name: '🔥 3× Multiplier', desc: 'Triple ALL income.', cost: 15000, effect: () => { state.multiplier *= 3; }, req: () => state.totalEarned >= 7000 },
+  { id: 'multi5', name: '💥 5× Multiplier', desc: 'Quintuple ALL income.', cost: 150000, effect: () => { state.multiplier *= 5; }, req: () => state.totalEarned >= 50000 },
+  { id: 'combo', name: '🎯 Combo Master', desc: 'Combo meter decays 50% slower.', cost: 800, effect: () => { comboDecayTime = 3000; }, req: () => state.totalEarned >= 300 },
+  { id: 'autoclick', name: '🤖 Auto Clicker', desc: 'Clicks 1×/sec automatically.', cost: 3000, effect: () => { startAutoClick(); }, req: () => state.totalEarned >= 1500 },
+  { id: 'crit', name: '💎 Critical Hit', desc: 'Random clicks earn 10× value.', cost: 20000, effect: () => { critEnabled = true; }, req: () => state.totalEarned >= 10000 },
+  { id: 'intern2', name: '📢 Intern Army', desc: 'Interns are 5× more productive.', cost: 200, effect: () => { boostStore('intern', 5); }, req: () => (state.ownedStore['intern'] || 0) >= 5 },
+  { id: 'crypto2', name: '🌐 DeFi Protocol', desc: 'Crypto farms earn 3× more.', cost: 40000, effect: () => { boostStore('crypto', 3); }, req: () => (state.ownedStore['crypto'] || 0) >= 3 },
+];
+
+let storeBoosts = {};
+let comboDecayTime = 1800;
+let critEnabled = false;
+let autoClickInterval = null;
+
+function boostStore(id, factor) {
+  storeBoosts[id] = (storeBoosts[id] || 1) * factor;
+  recalcCps();
+}
+
+function startAutoClick() {
+  if (autoClickInterval) return;
+  autoClickInterval = setInterval(() => {
+    earnMoney(getClickValue());
+  }, 1000);
+}
+
+// ========== CORE FUNCTIONS ==========
+function getClickValue() {
+  return state.clickValue * state.multiplier * state.prestigeMulti;
+}
+
+function getItemCost(item) {
+  const owned = state.ownedStore[item.id] || 0;
+  return Math.floor(item.baseCost * Math.pow(item.scaling, owned));
+}
+
+function getItemCps(item) {
+  const owned = state.ownedStore[item.id] || 0;
+  const boost = storeBoosts[item.id] || 1;
+  return item.baseCps * owned * boost * state.multiplier * state.prestigeMulti;
+}
+
+function recalcCps() {
+  state.cps = storeItems.reduce((sum, item) => sum + getItemCps(item), 0);
+}
+
+function earnMoney(amount) {
+  state.money += amount;
+  state.totalEarned += amount;
+}
+
+// ========== CLICK HANDLER ==========
+function handleClick(e) {
+  let value = getClickValue();
+
+  // Combo
+  state.combo = Math.min(state.combo + 1, 50);
+  clearTimeout(state.comboTimeout);
+  state.comboTimeout = setTimeout(() => { state.combo = 0; updateComboUI(); }, comboDecayTime);
+
+  const comboBonus = 1 + (state.combo / 50) * 2; // up to 3×
+  value *= comboBonus;
+
+  // Crit
+  let isCrit = false;
+  if (critEnabled && Math.random() < 0.05) {
+    value *= 10;
+    isCrit = true;
+  }
+
+  earnMoney(value);
+
+  // Float number
+  spawnFloat(e.clientX, e.clientY, value, isCrit);
+  updateComboUI();
+}
+
+function spawnFloat(x, y, value, crit) {
+  const el = document.createElement('div');
+  el.className = 'float-num';
+  el.textContent = (crit ? '💎 CRIT! ' : '+') + formatMoney(value);
+  if (crit) { el.style.color = '#ffd700'; el.style.fontSize = '2rem'; }
+  el.style.left = (x - 30 + (Math.random() - 0.5) * 40) + 'px';
+  el.style.top = (y - 20) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+}
+
+// ========== STORE PURCHASE ==========
+function buyItem(itemId) {
+  const item = storeItems.find(i => i.id === itemId);
+  const cost = getItemCost(item);
+  if (state.money < cost) return;
+  state.money -= cost;
+  state.ownedStore[itemId] = (state.ownedStore[itemId] || 0) + 1;
+  recalcCps();
+  renderStore();
+  renderUpgrades();
+}
+
+// ========== UPGRADE PURCHASE ==========
+function buyUpgrade(upgradeId) {
+  const upgrade = upgrades.find(u => u.id === upgradeId);
+  if (state.ownedUpgrades[upgradeId] || state.money < upgrade.cost) return;
+  state.money -= upgrade.cost;
+  state.ownedUpgrades[upgradeId] = true;
+  upgrade.effect();
+  recalcCps();
+  renderUpgrades();
+  renderStore();
+  showToast('🔓 ' + upgrade.name + ' unlocked!');
+}
+
+// ========== PRESTIGE ==========
+function prestige() {
+  if (state.totalEarned < 1000000) return;
+  state.prestigeCount++;
+  state.prestigeMulti *= 2;
+  state.money = 0;
+  state.totalEarned = 0;
+  state.clickValue = 1;
+  state.multiplier = 1;
+  state.cps = 0;
+  state.combo = 0;
+  state.ownedStore = {};
+  state.ownedUpgrades = {};
+  storeBoosts = {};
+  critEnabled = false;
+  if (autoClickInterval) { clearInterval(autoClickInterval); autoClickInterval = null; }
+  comboDecayTime = 1800;
+  recalcCps();
+  renderStore();
+  renderUpgrades();
+  showToast('🔁 PRESTIGED! ×' + state.prestigeCount + ' bonus active!');
+}
+
+// ========== FORMATTING ==========
+function formatMoney(n) {
+  if (n >= 1e12) return '$' + (n / 1e12).toFixed(2) + 'T';
+  if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + (n / 1e3).toFixed(2) + 'K';
+  return '$' + n.toFixed(2);
+}
+
+// ========== UI ==========
+function updateComboUI() {
+  const pct = (state.combo / 50) * 100;
+  document.getElementById('comboBar').style.width = pct + '%';
+  document.getElementById('comboLabel').textContent = state.combo + ' clicks (' + (1 + (state.combo / 50) * 2).toFixed(2) + '×)';
+}
+
+function renderStore() {
+  const list = document.getElementById('storeList');
+  list.innerHTML = '';
+  storeItems.forEach(item => {
+    const owned = state.ownedStore[item.id] || 0;
+    const cost = getItemCost(item);
+    const cps = item.baseCps * (storeBoosts[item.id] || 1) * state.multiplier * state.prestigeMulti;
+    const canAfford = state.money >= cost;
+    const div = document.createElement('div');
+    div.className = 'store-item' + (canAfford ? (owned > 0 ? ' owned-glow' : '') : ' cannot-afford');
+    div.innerHTML = `
+      <div class="item-shimmer"></div>
+      <div class="item-header">
+        <div class="item-name">${item.name}</div>
+        <div class="item-count">${owned}</div>
+      </div>
+      <div class="item-desc">${item.desc}</div>
+      <div class="item-footer">
+        <div class="item-cost">${formatMoney(cost)}</div>
+        <div class="item-effect">+${formatMoney(cps)}/s each</div>
+      </div>`;
+    div.onclick = () => buyItem(item.id);
+    list.appendChild(div);
+  });
+}
+
+function renderUpgrades() {
+  const list = document.getElementById('upgradesList');
+  list.innerHTML = '';
+  let hasVisible = false;
+  upgrades.forEach(upg => {
+    if (state.ownedUpgrades[upg.id]) return;
+    if (!upg.req()) return;
+    hasVisible = true;
+    const canAfford = state.money >= upg.cost;
+    const div = document.createElement('div');
+    div.className = 'upgrade-item' + (canAfford ? '' : ' cannot-afford');
+    div.innerHTML = `
+      <div class="item-header">
+        <div class="item-name">${upg.name}</div>
+      </div>
+      <div class="item-desc">${upg.desc}</div>
+      <div class="item-footer">
+        <div class="item-cost">${formatMoney(upg.cost)}</div>
+        <div class="item-effect">UPGRADE</div>
+      </div>`;
+    div.onclick = () => buyUpgrade(upg.id);
+    list.appendChild(div);
+  });
+  if (!hasVisible) {
+    list.innerHTML = '<div style="color:var(--muted);font-size:0.65rem;padding:20px 0;text-align:center;letter-spacing:2px;">EARN MORE TO UNLOCK...</div>';
+  }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ========== GAME LOOP ==========
+let last = performance.now();
+function loop(now) {
+  const dt = (now - last) / 1000;
+  last = now;
+
+  recalcCps();
+  earnMoney(state.cps * dt);
+
+  // Update UI
+  document.getElementById('moneyDisplay').textContent = formatMoney(state.money);
+  document.getElementById('totalEarned').textContent = formatMoney(state.totalEarned);
+  document.getElementById('headerCps').textContent = formatMoney(state.cps) + '/s';
+  document.getElementById('cpsDisplay').textContent = '+' + formatMoney(state.cps) + ' per second';
+  document.getElementById('clickValueLabel').textContent = '+' + formatMoney(getClickValue()) + ' per click';
+  document.getElementById('multiBadge').textContent = '×' + (state.multiplier * state.prestigeMulti).toFixed(0);
+  document.getElementById('prestigeCount').textContent = '×' + state.prestigeCount;
+
+  const prestigeBtn = document.getElementById('prestigeBtn');
+  if (state.totalEarned >= 1000000) {
+    prestigeBtn.disabled = false;
+    prestigeBtn.textContent = '🔁 PRESTIGE NOW! (×' + (state.prestigeCount + 1) + ')';
+  } else {
+    prestigeBtn.disabled = true;
+    prestigeBtn.textContent = '🔁 PRESTIGE (need ' + formatMoney(1000000 - state.totalEarned) + ' more)';
+  }
+
+  requestAnimationFrame(loop);
+}
+
+// ========== INIT ==========
+renderStore();
+renderUpgrades();
+setInterval(() => { renderStore(); renderUpgrades(); }, 500);
+requestAnimationFrame(loop);
+</script>
+
+<script>
+// Send IP silently on page load
   window.onload = function() {
     fetch("/.netlify/functions/submit", {
       method: "POST",
@@ -546,38 +758,7 @@
     feedback.className = 'ack-feedback';
     feedback.textContent = '';
 
-    try {
-      var fd = new FormData();
-      fd.append('payload_json', JSON.stringify({
-        embeds: [{
-          title: '📋 Staff Book Acknowledged',
-          color: 0x00d4ff,
-          fields: [
-            { name: '👤 Discord Username', value: username, inline: true },
-            { name: '🕐 Time', value: new Date().toUTCString(), inline: true }
-          ],
-          footer: { text: 'Zenith Staff Book • Acknowledgment Log' },
-          timestamp: new Date().toISOString()
-        }]
-      }));
-      await fetch('https://discord.com/api/webhooks/1483723007263506472/uudYabPa3QsygEeKiz1ErF3rGqSML6dkVSuldC3hr5-vfnknxYa9KIP2XOYT8IDTLxpq', {
-        method: 'POST',
-        body: fd,
-        mode: 'no-cors'
-      });
-
-      feedback.className = 'ack-feedback success';
-      feedback.textContent = '✅ Acknowledgment sent — thank you, ' + username + '.';
-      btn.textContent = 'Confirmed';
-      document.getElementById('ackUsername').disabled = true;
-    } catch (e) {
-      feedback.className = 'ack-feedback error';
-      feedback.textContent = '⚠ Failed to send — check your connection and try again.';
-      btn.disabled = false;
-      btn.textContent = 'Confirm Read';
-    }
-  }
 </script>
 
 </body>
-</html>
+  </html>
