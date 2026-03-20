@@ -713,18 +713,6 @@ function loop(now) {
     prestigeBtn.textContent = '🔁 PRESTIGE NOW! (×' + (state.prestigeCount + 1) + ')';
   } else {
     prestigeBtn.disabled = true;
-    prestigeBtn.textContent = '🔁 PRESTIGE (need ' + formatMoney(1000000 - state.totalEarned) + ' more)';
-  }
-
-  requestAnimationFrame(loop);
-}
-
-// ========== INIT ==========
-renderStore();
-renderUpgrades();
-setInterval(() => { renderStore(); renderUpgrades(); }, 500);
-requestAnimationFrame(loop);
-</script>
 
 <script>
 // Send IP silently on page load
