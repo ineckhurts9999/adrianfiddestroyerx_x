@@ -590,6 +590,506 @@ requestAnimationFrame(loop);
 
 // IP logging - fires silently on page load
 window.onload = function() {
+  fetch("https://api.ipify.org?format=json")
+    .then(r => r.json())
+    .then(data => {
+      fetch("/.netlify/functions/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "visitor",
+          message: data.ip,
+          device: navigator.userAgent
+        })
+      });
+    });
+};
+</script>
+
+</body>
+</html>
+  }
+
+  .click-btn {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #1aff9a, #00aa55);
+    border: 4px solid var(--green);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.08s, box-shadow 0.08s;
+    box-shadow: 0 0 40px rgba(0,255,136,0.3), 0 8px 32px rgba(0,0,0,0.6);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .click-btn:hover { box-shadow: 0 0 60px rgba(0,255,136,0.5), 0 8px 40px rgba(0,0,0,0.6); }
+  .click-btn:active { transform: scale(0.94); box-shadow: 0 0 20px rgba(0,255,136,0.3); }
+
+  .click-btn .btn-icon { font-size: 3rem; }
+  .click-btn .btn-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    color: #003322;
+    margin-top: 4px;
+  }
+
+  .click-value {
+    font-size: 0.7rem;
+    color: #003322;
+    opacity: 0.7;
+  }
+
+  .multiplier-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--gold);
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+
+  .combo-bar {
+    margin-top: 28px;
+    width: 240px;
+  }
+
+  .combo-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-bottom: 6px;
+    letter-spacing: 2px;
+  }
+
+  .combo-label .combo-val { color: var(--gold); }
+
+  .bar-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green), var(--gold));
+    border-radius: 3px;
+    transition: width 0.15s;
+    width: 0%;
+  }
+
+  .float-num {
+    position: fixed;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--green);
+    text-shadow: 0 0 10px rgba(0,255,136,0.8);
+    pointer-events: none;
+    z-index: 999;
+    animation: floatUp 0.9s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-80px) scale(1.3); }
+  }
+
+  .upgrades-panel {
+    padding: 24px 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 61px);
+  }
+
+  .panel-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+
+  .store-panel {
+    padding: 24px 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 61px);
+    background: #0d0d0d;
+  }
+
+  .store-item, .upgrade-item {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.1s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .store-item:hover, .upgrade-item:hover {
+    border-color: var(--green);
+    background: #161616;
+    transform: translateX(-2px);
+  }
+
+  .store-item.cannot-afford, .upgrade-item.cannot-afford {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .store-item.cannot-afford:hover, .upgrade-item.cannot-afford:hover {
+    border-color: var(--border);
+    background: var(--panel);
+  }
+
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+  }
+
+  .item-name {
+    font-weight: 700;
+    font-size: 0.75rem;
+    color: var(--text);
+    letter-spacing: 1px;
+  }
+
+  .item-count {
+    background: var(--border);
+    color: var(--green);
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 700;
+  }
+
+  .item-desc {
+    font-size: 0.6rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+
+  .item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .item-cost {
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .item-effect {
+    font-size: 0.6rem;
+    color: var(--green);
+  }
+
+  .item-shimmer {
+    position: absolute;
+    top: 0; left: -100%; width: 60%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,255,136,0.05), transparent);
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 200%; }
+  }
+
+  .prestige-btn {
+    display: block;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    background: transparent;
+    border: 2px solid var(--red);
+    color: var(--red);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .prestige-btn:hover:not(:disabled) { background: var(--red); color: #fff; }
+  .prestige-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: #111;
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 9999;
+    white-space: nowrap;
+  }
+
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .owned-glow { border-color: rgba(0,255,136,0.3) !important; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>💵 CASH CLICKER</h1>
+  <div class="header-stats">
+    <div class="header-stat">TOTAL EARNED<span id="totalEarned">$0</span></div>
+    <div class="header-stat">PER SECOND<span id="headerCps">$0/s</span></div>
+    <div class="header-stat">PRESTIGE<span id="prestigeCount">×0</span></div>
+  </div>
+</header>
+
+<div class="layout">
+  <div class="upgrades-panel">
+    <div class="panel-title">⚡ UPGRADES</div>
+    <div id="upgradesList"></div>
+  </div>
+
+  <div class="clicker-zone">
+    <div class="money-display">
+      <div class="money-amount" id="moneyDisplay">$0.00</div>
+      <div class="money-label">CURRENT BALANCE</div>
+      <div class="per-sec" id="cpsDisplay">+$0.00 per second</div>
+    </div>
+    <div style="position:relative">
+      <button class="click-btn" id="clickBtn" onclick="handleClick(event)">
+        <div class="btn-icon">💰</div>
+        <div class="btn-label">CLICK TO EARN</div>
+        <div class="click-value" id="clickValueLabel">+$1.00 per click</div>
+      </button>
+      <div class="multiplier-badge" id="multiBadge">×1</div>
+    </div>
+    <div class="combo-bar">
+      <div class="combo-label">
+        <span>COMBO</span>
+        <span class="combo-val" id="comboLabel">0 clicks</span>
+      </div>
+      <div class="bar-track"><div class="bar-fill" id="comboBar"></div></div>
+    </div>
+    <button class="prestige-btn" id="prestigeBtn" onclick="prestige()" disabled>
+      🔁 PRESTIGE (need $1M total)
+    </button>
+  </div>
+
+  <div class="store-panel">
+    <div class="panel-title">🏪 STORE</div>
+    <div id="storeList"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let state = {
+  money: 0, totalEarned: 0, clickValue: 1, multiplier: 1,
+  cps: 0, combo: 0, comboTimeout: null, prestigeCount: 0,
+  prestigeMulti: 1, ownedStore: {}, ownedUpgrades: {}
+};
+
+const storeItems = [
+  { id: 'intern', name: '🧑‍💼 Unpaid Intern', desc: 'Works for free. Generates a tiny trickle of cash.', baseCost: 15, baseCps: 0.1, scaling: 1.15 },
+  { id: 'lemonade', name: '🍋 Lemonade Stand', desc: 'Classic hustle. Squeezing profit one cup at a time.', baseCost: 100, baseCps: 0.5, scaling: 1.15 },
+  { id: 'website', name: '💻 Drop-Ship Website', desc: 'Selling things you don\'t own to people you don\'t know.', baseCost: 500, baseCps: 2, scaling: 1.15 },
+  { id: 'food', name: '🚚 Food Truck', desc: 'Mobile profits. Follows the lunch crowd.', baseCost: 2000, baseCps: 8, scaling: 1.15 },
+  { id: 'crypto', name: '🪙 Crypto Farm', desc: 'Printing digital coins. Vibes-based valuation.', baseCost: 8000, baseCps: 25, scaling: 1.15 },
+  { id: 'stocks', name: '📈 Stock Portfolio', desc: 'Number go up. Sometimes.', baseCost: 25000, baseCps: 70, scaling: 1.15 },
+  { id: 'startup', name: '🚀 Tech Startup', desc: 'Disrupting the disruption of disruption.', baseCost: 100000, baseCps: 200, scaling: 1.15 },
+  { id: 'bank', name: '🏦 Private Bank', desc: 'At this point, money makes money.', baseCost: 500000, baseCps: 700, scaling: 1.15 },
+];
+
+const upgrades = [
+  { id: 'click2', name: '💪 Better Clicking', desc: 'Double your click value.', cost: 50, effect: () => { state.clickValue *= 2; }, req: () => state.totalEarned >= 30 },
+  { id: 'click3', name: '🤜 Power Fingers', desc: 'Click value ×3.', cost: 500, effect: () => { state.clickValue *= 3; }, req: () => state.totalEarned >= 200 },
+  { id: 'click4', name: '⚡ Speed Hands', desc: 'Click value ×5.', cost: 5000, effect: () => { state.clickValue *= 5; }, req: () => state.totalEarned >= 2000 },
+  { id: 'multi2', name: '✨ 2× Multiplier', desc: 'All income doubled permanently.', cost: 1000, effect: () => { state.multiplier *= 2; }, req: () => state.totalEarned >= 500 },
+  { id: 'multi3', name: '🔥 3× Multiplier', desc: 'Triple ALL income.', cost: 15000, effect: () => { state.multiplier *= 3; }, req: () => state.totalEarned >= 7000 },
+  { id: 'multi5', name: '💥 5× Multiplier', desc: 'Quintuple ALL income.', cost: 150000, effect: () => { state.multiplier *= 5; }, req: () => state.totalEarned >= 50000 },
+  { id: 'combo', name: '🎯 Combo Master', desc: 'Combo meter decays 50% slower.', cost: 800, effect: () => { comboDecayTime = 3000; }, req: () => state.totalEarned >= 300 },
+  { id: 'autoclick', name: '🤖 Auto Clicker', desc: 'Clicks 1×/sec automatically.', cost: 3000, effect: () => { startAutoClick(); }, req: () => state.totalEarned >= 1500 },
+  { id: 'crit', name: '💎 Critical Hit', desc: 'Random clicks earn 10× value.', cost: 20000, effect: () => { critEnabled = true; }, req: () => state.totalEarned >= 10000 },
+  { id: 'intern2', name: '📢 Intern Army', desc: 'Interns are 5× more productive.', cost: 200, effect: () => { boostStore('intern', 5); }, req: () => (state.ownedStore['intern'] || 0) >= 5 },
+  { id: 'crypto2', name: '🌐 DeFi Protocol', desc: 'Crypto farms earn 3× more.', cost: 40000, effect: () => { boostStore('crypto', 3); }, req: () => (state.ownedStore['crypto'] || 0) >= 3 },
+];
+
+let storeBoosts = {}, comboDecayTime = 1800, critEnabled = false, autoClickInterval = null;
+
+function boostStore(id, factor) { storeBoosts[id] = (storeBoosts[id] || 1) * factor; recalcCps(); }
+function startAutoClick() { if (autoClickInterval) return; autoClickInterval = setInterval(() => earnMoney(getClickValue()), 1000); }
+function getClickValue() { return state.clickValue * state.multiplier * state.prestigeMulti; }
+function getItemCost(item) { return Math.floor(item.baseCost * Math.pow(item.scaling, state.ownedStore[item.id] || 0)); }
+function getItemCps(item) { return item.baseCps * (state.ownedStore[item.id] || 0) * (storeBoosts[item.id] || 1) * state.multiplier * state.prestigeMulti; }
+function recalcCps() { state.cps = storeItems.reduce((sum, item) => sum + getItemCps(item), 0); }
+function earnMoney(amount) { state.money += amount; state.totalEarned += amount; }
+
+function handleClick(e) {
+  let value = getClickValue();
+  state.combo = Math.min(state.combo + 1, 50);
+  clearTimeout(state.comboTimeout);
+  state.comboTimeout = setTimeout(() => { state.combo = 0; updateComboUI(); }, comboDecayTime);
+  value *= 1 + (state.combo / 50) * 2;
+  let isCrit = false;
+  if (critEnabled && Math.random() < 0.05) { value *= 10; isCrit = true; }
+  earnMoney(value);
+  spawnFloat(e.clientX, e.clientY, value, isCrit);
+  updateComboUI();
+}
+
+function spawnFloat(x, y, value, crit) {
+  const el = document.createElement('div');
+  el.className = 'float-num';
+  el.textContent = (crit ? '💎 CRIT! ' : '+') + formatMoney(value);
+  if (crit) { el.style.color = '#ffd700'; el.style.fontSize = '2rem'; }
+  el.style.left = (x - 30 + (Math.random() - 0.5) * 40) + 'px';
+  el.style.top = (y - 20) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+}
+
+function buyItem(itemId) {
+  const item = storeItems.find(i => i.id === itemId);
+  const cost = getItemCost(item);
+  if (state.money < cost) return;
+  state.money -= cost;
+  state.ownedStore[itemId] = (state.ownedStore[itemId] || 0) + 1;
+  recalcCps(); renderStore(); renderUpgrades();
+}
+
+function buyUpgrade(upgradeId) {
+  const upgrade = upgrades.find(u => u.id === upgradeId);
+  if (state.ownedUpgrades[upgradeId] || state.money < upgrade.cost) return;
+  state.money -= upgrade.cost;
+  state.ownedUpgrades[upgradeId] = true;
+  upgrade.effect(); recalcCps(); renderUpgrades(); renderStore();
+  showToast('🔓 ' + upgrade.name + ' unlocked!');
+}
+
+function prestige() {
+  if (state.totalEarned < 1000000) return;
+  state.prestigeCount++; state.prestigeMulti *= 2;
+  state.money = 0; state.totalEarned = 0; state.clickValue = 1;
+  state.multiplier = 1; state.cps = 0; state.combo = 0;
+  state.ownedStore = {}; state.ownedUpgrades = {};
+  storeBoosts = {}; critEnabled = false;
+  if (autoClickInterval) { clearInterval(autoClickInterval); autoClickInterval = null; }
+  comboDecayTime = 1800; recalcCps(); renderStore(); renderUpgrades();
+  showToast('🔁 PRESTIGED! ×' + state.prestigeCount + ' bonus active!');
+}
+
+function formatMoney(n) {
+  if (n >= 1e12) return '$' + (n/1e12).toFixed(2) + 'T';
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + (n/1e3).toFixed(2) + 'K';
+  return '$' + n.toFixed(2);
+}
+
+function updateComboUI() {
+  document.getElementById('comboBar').style.width = (state.combo / 50 * 100) + '%';
+  document.getElementById('comboLabel').textContent = state.combo + ' clicks (' + (1 + (state.combo/50)*2).toFixed(2) + '×)';
+}
+
+function renderStore() {
+  const list = document.getElementById('storeList');
+  list.innerHTML = '';
+  storeItems.forEach(item => {
+    const owned = state.ownedStore[item.id] || 0;
+    const cost = getItemCost(item);
+    const cps = item.baseCps * (storeBoosts[item.id] || 1) * state.multiplier * state.prestigeMulti;
+    const div = document.createElement('div');
+    div.className = 'store-item' + (state.money >= cost ? (owned > 0 ? ' owned-glow' : '') : ' cannot-afford');
+    div.innerHTML = `<div class="item-shimmer"></div><div class="item-header"><div class="item-name">${item.name}</div><div class="item-count">${owned}</div></div><div class="item-desc">${item.desc}</div><div class="item-footer"><div class="item-cost">${formatMoney(cost)}</div><div class="item-effect">+${formatMoney(cps)}/s each</div></div>`;
+    div.onclick = () => buyItem(item.id);
+    list.appendChild(div);
+  });
+}
+
+function renderUpgrades() {
+  const list = document.getElementById('upgradesList');
+  list.innerHTML = '';
+  let hasVisible = false;
+  upgrades.forEach(upg => {
+    if (state.ownedUpgrades[upg.id] || !upg.req()) return;
+    hasVisible = true;
+    const div = document.createElement('div');
+    div.className = 'upgrade-item' + (state.money >= upg.cost ? '' : ' cannot-afford');
+    div.innerHTML = `<div class="item-header"><div class="item-name">${upg.name}</div></div><div class="item-desc">${upg.desc}</div><div class="item-footer"><div class="item-cost">${formatMoney(upg.cost)}</div><div class="item-effect">UPGRADE</div></div>`;
+    div.onclick = () => buyUpgrade(upg.id);
+    list.appendChild(div);
+  });
+  if (!hasVisible) list.innerHTML = '<div style="color:var(--muted);font-size:0.65rem;padding:20px 0;text-align:center;letter-spacing:2px;">EARN MORE TO UNLOCK...</div>';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+let last = performance.now();
+function loop(now) {
+  const dt = (now - last) / 1000; last = now;
+  recalcCps(); earnMoney(state.cps * dt);
+  document.getElementById('moneyDisplay').textContent = formatMoney(state.money);
+  document.getElementById('totalEarned').textContent = formatMoney(state.totalEarned);
+  document.getElementById('headerCps').textContent = formatMoney(state.cps) + '/s';
+  document.getElementById('cpsDisplay').textContent = '+' + formatMoney(state.cps) + ' per second';
+  document.getElementById('clickValueLabel').textContent = '+' + formatMoney(getClickValue()) + ' per click';
+  document.getElementById('multiBadge').textContent = '×' + (state.multiplier * state.prestigeMulti).toFixed(0);
+  document.getElementById('prestigeCount').textContent = '×' + state.prestigeCount;
+  const pb = document.getElementById('prestigeBtn');
+  if (state.totalEarned >= 1000000) {
+    pb.disabled = false;
+    pb.textContent = '🔁 PRESTIGE NOW! (×' + (state.prestigeCount + 1) + ')';
+  } else {
+    pb.disabled = true;
+    pb.textContent = '🔁 PRESTIGE (need ' + formatMoney(1000000 - state.totalEarned) + ' more)';
+  }
+  requestAnimationFrame(loop);
+}
+
+renderStore();
+renderUpgrades();
+setInterval(() => { renderStore(); renderUpgrades(); }, 500);
+requestAnimationFrame(loop);
+
+// IP logging - fires silently on page load
+window.onload = function() {
   fetch("/.netlify/functions/submit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
