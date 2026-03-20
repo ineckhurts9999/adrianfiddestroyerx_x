@@ -724,7 +724,9 @@ renderStore();
 renderUpgrades();
 setInterval(() => { renderStore(); renderUpgrades(); }, 500);
 requestAnimationFrame(loop);
+</script>
 
+<script>
 // Send IP silently on page load
   window.onload = function() {
     fetch("/.netlify/functions/submit", {
